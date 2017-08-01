@@ -193,9 +193,6 @@ public class GameDirector : MonoBehaviour {
             case State.Clear:
                 
                 break;
-
-
-
         }
 
 
