@@ -18,12 +18,18 @@ public class ironohenkou : MonoBehaviour {
         this.delta += Time.deltaTime;
         
         if (delta >= 3) {
+            float xxx = this.transform.localScale.x;
+            float yyy = this.transform.localScale.y;
             GetComponent<Renderer>().material.color = Color.blue;
-            
+            this.transform.localScale = new Vector3(xxx, yyy, 1) * 0.98f;
             kakenai();
         }else
         {
-            if (delta > 2.5) { GetComponent<Renderer>().material.color = Color.magenta; }
+            if (delta > 2.5) {
+                
+                GetComponent<Renderer>().material.color = Color.magenta;
+
+            }
         }
 
     }
