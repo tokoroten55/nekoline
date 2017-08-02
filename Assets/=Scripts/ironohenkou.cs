@@ -5,10 +5,10 @@ using UnityEngine;
 public class ironohenkou : MonoBehaviour {
 
     float delta = 0;
+
     
     void Start()
     {
-
     }
 
     
@@ -22,8 +22,9 @@ public class ironohenkou : MonoBehaviour {
             float yyy = this.transform.localScale.y;
             GetComponent<Renderer>().material.color = Color.blue;
             this.transform.localScale = new Vector3(xxx, yyy, 1) * 0.98f;
-            kakenai();
-        }else
+            Dest();
+        }
+        else
         {
             if (delta > 2.5) {
                 
@@ -33,9 +34,8 @@ public class ironohenkou : MonoBehaviour {
         }
 
     }
-    void kakenai() {
-
-
+    private void Dest()
+    {
         this.GetComponent<Rigidbody2D>().isKinematic = false;
         Destroy(this.gameObject, 2f);
     }

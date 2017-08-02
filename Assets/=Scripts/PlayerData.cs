@@ -10,7 +10,7 @@ public class PlayerData : MonoBehaviour
     GameObject tpoint;
     GameObject LIFEImage;
     GameObject TIMEtxt;
-    private float restStaminaTime=30;             // スタミナが1回復するまでの残り時間
+    
     void Start()
     {
         
@@ -24,9 +24,11 @@ public class PlayerData : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (SaveData.Instance.Life < SaveData.Instance.MaxLife) {
             LIFETIME();
-                }
+            return;
+        }
         else
         {
             TIMEtxt.GetComponent<Text>().text = "";
@@ -105,7 +107,6 @@ public class PlayerData : MonoBehaviour
             SaveData.Instance.stage3[i] = 0;
 
         }
-        SaveData.Instance.Save();
     }
 
     public void MAXLIFE()
@@ -118,28 +119,28 @@ public class PlayerData : MonoBehaviour
     //ライフタイマー発動
     void LIFETIME()
     {
-        if (restStaminaTime <= 0)
-        {
-            SaveData.Instance.Life++;
-            restStaminaTime = 30;
-            LIFEPoint();
+            if (SaveData.Instance.restStaminaTime <= 0)
+            {
+                SaveData.Instance.Life++;
+                SaveData.Instance.restStaminaTime = 30;
+                LIFEPoint();
+                return;
+            }
+            else
+            {
+                int minutes = (int)SaveData.Instance.restStaminaTime / 60;
+                int seconds = (int)SaveData.Instance.restStaminaTime % 60;
+                string second = seconds.ToString();
+                second = second.PadLeft(2, '0');
+                // 表示するテキスト
+
+                TIMEtxt.GetComponent<Text>().text = "あと" + minutes + ":" + second + "";
+                SaveData.Instance.restStaminaTime -= Time.unscaledDeltaTime;
+                Debug.Log(SaveData.Instance.restStaminaTime);
+            }
         }
-        else
-        {
-            int minutes = (int)restStaminaTime / 60;
-            int seconds = (int)restStaminaTime % 60;
-            // 表示するテキスト
-            TIMEtxt.GetComponent<Text>().text = "あと" + minutes + ":" + seconds;
-            restStaminaTime -= Time.deltaTime;
-            //Invoke("RELIFETIME", 1.0f);
-        }
-    }
-    void RELIFETIME()
+    void OnApplicationQuit()
     {
-        int minutes = (int)restStaminaTime / 60;
-        int seconds = (int)restStaminaTime % 60;
-        // 表示するテキスト
-        TIMEtxt.GetComponent<Text>().text = minutes + ":##"+seconds;
-        
+        SaveData.Instance.Save();
     }
 }

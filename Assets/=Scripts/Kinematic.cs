@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Kinematic : MonoBehaviour {
 
-   // GameObject LINE;
-    
+    // GameObject LINE;
+    public GameObject hoshi;
+
     void Start () {
      //   LINE = GameObject.FindWithTag("line");
     }
@@ -18,8 +19,8 @@ public class Kinematic : MonoBehaviour {
     {
         if (other.gameObject.CompareTag("line"))
         {
-
-            Destroy(other.gameObject);
+            GameObject obj = Instantiate(hoshi, other.transform.position, other.transform.rotation) as GameObject;    
+        Destroy(other.gameObject);
         }
     }
 }

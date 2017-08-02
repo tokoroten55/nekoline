@@ -41,7 +41,7 @@ public class SaveData : ISerializationCallbackReceiver
     public int Life=10;
     public int MaxLife=10;
     public int Lifekan=10;
-
+    public float restStaminaTime = 10;
     public int syoki = 0;
     public List<int> stageList = new List<int>() {0,
         0,1,2,3,4,5,6,8,10,12,//27
@@ -214,5 +214,6 @@ public class SaveData : ISerializationCallbackReceiver
 
         return filePath;
     }
+
 
 }

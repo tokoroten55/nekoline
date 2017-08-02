@@ -5,10 +5,10 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameDirector : MonoBehaviour {
-    public int stage= 1;
+    public int stage = 1;
     enum State
     {
-        Ready,Play,GameOver, Clear
+        Ready, Play, GameOver, Clear
     }
     State state;
 
@@ -57,7 +57,7 @@ public class GameDirector : MonoBehaviour {
     int maxcat;
     //int zancat;
 
-        //パーフェクトクリアチェック
+    //パーフェクトクリアチェック
     int Perfect1 = 0;
     int Perfect2 = 0;
 
@@ -78,10 +78,10 @@ public class GameDirector : MonoBehaviour {
         stageclear.SetActive(false);
 
         this.StartPanelStageText1 = GameObject.Find("StartPanel/TextStage");
-        this.StartPanelStageText1.GetComponent<Text>().text = "Stage"+stage;
+        this.StartPanelStageText1.GetComponent<Text>().text = "Stage" + stage;
 
         this.StartPanelStageText2 = GameObject.Find("StartPanel/Text");
-        this.StartPanelStageText2.GetComponent<Text>().text ="Time limit  "+time+ "\n Required quantity" + zan2+" ";
+        this.StartPanelStageText2.GetComponent<Text>().text = "Time limit  " + time + "\n Required quantity" + zan2 + " ";
 
         //ポーズ
         this.PausePanel = GameObject.Find("PausePanel");
@@ -93,16 +93,16 @@ public class GameDirector : MonoBehaviour {
 
         //クリアパネル
         this.ClearPanel = GameObject.Find("ClearPanel");
-        
+
 
         this.StartPanelStageText1 = GameObject.Find("ClearPanel/TextStage");
-        this.StartPanelStageText1.GetComponent<Text>().text = "Stage" + stage+ " Clear";
+        this.StartPanelStageText1.GetComponent<Text>().text = "Stage" + stage + " Clear";
 
         this.ClearPanelFast = GameObject.Find("ClearPanel/Image2/Text");
         this.ClearPanelFast.GetComponent<Text>().text = "★ Fast clear";
-        this.ClearPanelDeath= GameObject.Find("ClearPanel/Image3/Text");
+        this.ClearPanelDeath = GameObject.Find("ClearPanel/Image3/Text");
         this.ClearPanelDeath.GetComponent<Text>().text = "★ No Died";
-        
+
 
         this.ani1 = GameObject.Find("ClearPanel/Image1");
         ani1.SetActive(false);
@@ -121,7 +121,7 @@ public class GameDirector : MonoBehaviour {
 
 
 
-    void Start () {
+    void Start() {
         maxcat = zan2;
         this.timerText.GetComponent<Text>().text = this.time.ToString("F0");
         this.nokoriText.GetComponent<TextMesh>().text = zan + "/" + zan2;
@@ -129,17 +129,17 @@ public class GameDirector : MonoBehaviour {
         //音楽設定
         if (GameObject.Find("SoundManager") != null)
         {
-        if (stage == 20)
-        {
-            SoundManager.Instance.PlayBGM(1);
-        }else
-        {
-            SoundManager.Instance.PlayBGM(0);
-        }
+            if (stage == 20)
+            {
+                SoundManager.Instance.PlayBGM(1);
+            } else
+            {
+                SoundManager.Instance.PlayBGM(0);
+            }
         }
     }
-	
-	void Update () {
+
+    void Update() {
 
         switch (state)
         {
@@ -162,7 +162,7 @@ public class GameDirector : MonoBehaviour {
                 //猫生成
                 this.delta += Time.deltaTime;
                 this.time2 += Time.deltaTime;
-                if (this.delta > this.span && maxcat>=1)
+                if (this.delta > this.span && maxcat >= 1)
                 {
                     this.delta = 0;
                     maxcat--;
@@ -174,24 +174,24 @@ public class GameDirector : MonoBehaviour {
                 //時間管理
                 this.time -= Time.deltaTime;
                 if (time <= 0)
-                    {
-                        Timeover();
-                    }
-                    else
-                    {
-                        this.timerText.GetComponent<Text>().text = this.time.ToString("F0");
-                    }
-                    //state = State.GameOver;
+                {
+                    Timeover();
+                }
+                else
+                {
+                    this.timerText.GetComponent<Text>().text = this.time.ToString("F0");
+                }
+                //state = State.GameOver;
                 break;
 
 
             case State.GameOver:
-                
+
                 break;
 
 
             case State.Clear:
-                
+
                 break;
         }
 
@@ -201,8 +201,8 @@ public class GameDirector : MonoBehaviour {
     //猫残数確認・クリア判定
     public void nokori()
     {
-        zan ++;
-        this.nokoriText.GetComponent<TextMesh>().text =zan+"/"+zan2;
+        zan++;
+        this.nokoriText.GetComponent<TextMesh>().text = zan + "/" + zan2;
         if (zan >= zan2)
         {
             Stageclear();
@@ -232,7 +232,7 @@ public class GameDirector : MonoBehaviour {
     //シーン切り替え
     void Stageclear()
     {
-        
+
         state = State.Clear;
         stageclear.SetActive(true);
         AudioSource.PlayClipAtPoint(ClearSE, transform.position);
@@ -256,19 +256,19 @@ public class GameDirector : MonoBehaviour {
         }
         if (Perfect1 == 1 && Perfect2 == 1)
         {
-            SaveData.Instance.Life++;
+            lifeplus();
         }
         SaveData.Instance.Save();
 
-        
+
         Invoke("select", 3.0f);
     }
 
     //ステージセレクトへ
-        void select()
+    void select()
     {
         //クリアパネル出現
-        if (LIFEPanel)LIFEPanel.GetComponent<Panel>().panel2();
+        if (LIFEPanel) LIFEPanel.GetComponent<Panel>().panel2();
         ClearPanel.SetActive(true);
         ani1.SetActive(true);
         this.StartPanelStageText2 = GameObject.Find("ClearPanel/Text");
@@ -291,21 +291,30 @@ public class GameDirector : MonoBehaviour {
 
     void button3()
     {
-        
+
         if (died > 0)
         {
             this.ClearPanelDeath.GetComponent<Text>().text = "✖   <color=#000000><B>" + died + "</B> Died</color>";
         }
         ani3.SetActive(true);
-        if (Perfect1== 1 && Perfect2 == 1) {
+        if (Perfect1 == 1 && Perfect2 == 1) {
             this.StartPanelStageText2 = GameObject.Find("ClearPanel/Perfect Bonus");
             this.StartPanelStageText2.GetComponent<Text>().text = "Perfect Bonus LIFE +<size=150>1</size>";
         }
-
-
-
-
     }
+
+
+    //ステージクリアのライフ処理
+    void lifeplus()
+    {
+        SaveData.Instance.Life++;
+        if (SaveData.Instance.Life >= SaveData.Instance.MaxLife)
+        {
+            SaveData.Instance.restStaminaTime = 30;
+        }
+        return;
+    }
+
 
 
     //リトライ
