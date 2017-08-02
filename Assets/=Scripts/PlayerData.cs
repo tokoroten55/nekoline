@@ -9,20 +9,29 @@ public class PlayerData : MonoBehaviour
     static int Tpoint;
     GameObject tpoint;
     GameObject LIFEImage;
-
+    GameObject TIMEtxt;
+    private float restStaminaTime=30;             // スタミナが1回復するまでの残り時間
     void Start()
     {
         
         LIFEPoint();
         this.tpoint = GameObject.Find("LIFECanvas/LIFEPanel/POINTImage/POINTText");
-
+        this.TIMEtxt = GameObject.Find("LIFECanvas/LIFEPanel/TIMEText");
+        
         point();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (SaveData.Instance.Life < SaveData.Instance.MaxLife) {
+            LIFETIME();
+                }
+        else
+        {
+            TIMEtxt.GetComponent<Text>().text = "";
+            return;
+        }
     }
 
     //トータルポイント取得
@@ -106,5 +115,31 @@ public class PlayerData : MonoBehaviour
         LIFEPoint();
     }
 
-
+    //ライフタイマー発動
+    void LIFETIME()
+    {
+        if (restStaminaTime <= 0)
+        {
+            SaveData.Instance.Life++;
+            restStaminaTime = 30;
+            LIFEPoint();
+        }
+        else
+        {
+            int minutes = (int)restStaminaTime / 60;
+            int seconds = (int)restStaminaTime % 60;
+            // 表示するテキスト
+            TIMEtxt.GetComponent<Text>().text = "あと" + minutes + ":" + seconds;
+            restStaminaTime -= Time.deltaTime;
+            //Invoke("RELIFETIME", 1.0f);
+        }
+    }
+    void RELIFETIME()
+    {
+        int minutes = (int)restStaminaTime / 60;
+        int seconds = (int)restStaminaTime % 60;
+        // 表示するテキスト
+        TIMEtxt.GetComponent<Text>().text = minutes + ":##"+seconds;
+        
+    }
 }
