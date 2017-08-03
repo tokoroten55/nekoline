@@ -2,23 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class PlayerData : MonoBehaviour
 {
-
+    
     static int Tpoint;
     GameObject tpoint;
     GameObject LIFEImage;
     GameObject TIMEtxt;
-    
+
+    GameObject test;
+
     void Start()
     {
-        
         LIFEPoint();
         this.tpoint = GameObject.Find("LIFECanvas/LIFEPanel/POINTImage/POINTText");
         this.TIMEtxt = GameObject.Find("LIFECanvas/LIFEPanel/TIMEText");
-        
         point();
+        if (SaveData.Instance.kaishi == 1)
+        {
+            kidouchek();
+        }
     }
 
     // Update is called once per frame
@@ -139,8 +144,41 @@ public class PlayerData : MonoBehaviour
                 Debug.Log(SaveData.Instance.restStaminaTime);
             }
         }
+    //起動時チェック
+    void kidouchek()
+    {
+        this.test = GameObject.Find("Canvas/test");
+
+        SaveData.Instance.kaishi = 0;
+        long testestes = SaveData.Instance.oldTicks;
+        long newTicks = DateTime.Now.Ticks;
+        long diff = ((newTicks - testestes) / (1000 * 1000 * 10));
+        int diff2 = ((int)diff- (int)SaveData.Instance.restStaminaTime)/300;
+        float diff3 = ((float)diff - (float)SaveData.Instance.restStaminaTime) % 300;
+
+        if (diff >= 0)
+        {
+            SaveData.Instance.Life += diff2;
+        }
+        if (SaveData.Instance.Life >= SaveData.Instance.MaxLife) {
+            SaveData.Instance.Life = SaveData.Instance.MaxLife;
+        }
+        SaveData.Instance.restStaminaTime -= diff3;
+
+        test.GetComponent<Text>().text = "前回の起動より" + diff+"秒\n"+ diff2+"回復\n"+ diff3+"余り";
+
+
+
+    }
+
+
+
+
+    //アプリ終了時保存
     void OnApplicationQuit()
     {
+        SaveData.Instance.kaishi = 1;
+        SaveData.Instance.SetClose();
         SaveData.Instance.Save();
     }
 }

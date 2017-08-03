@@ -37,6 +37,8 @@ public class SaveData : ISerializationCallbackReceiver
     //public int SampleInt = 10;
     //public string SampleString = "Sample";
     //public bool SampleBool = false;
+    public int kaishi=0;
+    public long oldTicks =0;
     public int flag;
     public int Life=10;
     public int MaxLife=10;
@@ -215,5 +217,9 @@ public class SaveData : ISerializationCallbackReceiver
         return filePath;
     }
 
-
+    public void SetClose()
+    {
+        oldTicks = DateTime.Now.Ticks;
+        return;
+    }
 }

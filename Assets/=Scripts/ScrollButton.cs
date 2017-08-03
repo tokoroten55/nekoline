@@ -23,6 +23,8 @@ public class ScrollButton : MonoBehaviour
     GameObject SpecialPanel;
     GameObject ReviewPanel;
 
+    
+
     public GameObject PlayerData;
     public GameObject Fade;
     public RectTransform[] content = new RectTransform[3];
@@ -130,6 +132,8 @@ public class ScrollButton : MonoBehaviour
         SpecialPanel.SetActive(false);
         this.ReviewPanel = GameObject.Find("ReviewPanel");
         ReviewPanel.SetActive(false);
+
+        
     }
 
 
