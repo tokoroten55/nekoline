@@ -33,6 +33,7 @@ public class GameDirector : MonoBehaviour {
     GameObject ClearPanelStageText2;
     GameObject LIFEPanel;
     GameObject PlayerData;
+    GameObject REPanel;
 
     GameObject ClearPanelFast;
     GameObject ClearPanelDeath;
@@ -68,8 +69,9 @@ public class GameDirector : MonoBehaviour {
         //ライフパネル
         this.LIFEPanel = GameObject.Find("LIFEPanel");
         this.PlayerData = GameObject.Find("PlayerData");
-
-
+        
+        this.REPanel = GameObject.Find("REPanel");//ライフ不足時のパネル
+        REPanel.SetActive(false);
         this.timerText = GameObject.Find("Time");
         this.nokoriText = GameObject.Find("nokori");
         this.timeover = GameObject.Find("TimeOver");
@@ -232,7 +234,6 @@ public class GameDirector : MonoBehaviour {
     //シーン切り替え
     void Stageclear()
     {
-
         state = State.Clear;
         stageclear.SetActive(true);
         AudioSource.PlayClipAtPoint(ClearSE, transform.position);
@@ -310,7 +311,7 @@ public class GameDirector : MonoBehaviour {
         SaveData.Instance.Life++;
         if (SaveData.Instance.Life >= SaveData.Instance.MaxLife)
         {
-            SaveData.Instance.restStaminaTime = 30;
+            SaveData.Instance.restStaminaTime = 300;
         }
         return;
     }
@@ -324,7 +325,15 @@ public class GameDirector : MonoBehaviour {
         ContinuePanel.SetActive(true);
     }
 
-
+    //パネルを閉じる
+    public void closepanel()
+    {
+        REPanel.SetActive(false);//閉じる
+    }
+    public void openpanel()
+    {
+        REPanel.SetActive(true);//開く
+    }
 
     //ポーズボタン
     public void onClick()

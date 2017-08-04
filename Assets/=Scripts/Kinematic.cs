@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Kinematic : MonoBehaviour {
+public class Kinematic : MonoBehaviour
+{
 
     // GameObject LINE;
     public GameObject hoshi;
@@ -19,7 +20,7 @@ public class Kinematic : MonoBehaviour {
     {
         if (other.gameObject.CompareTag("line"))
         {
-            GameObject obj = Instantiate(hoshi, other.transform.position, other.transform.rotation) as GameObject;    
+        GameObject obj = Instantiate(hoshi,other.transform.position,other.transform.rotation) as GameObject;    
         Destroy(other.gameObject);
         }
     }

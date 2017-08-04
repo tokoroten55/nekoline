@@ -28,7 +28,7 @@ public class STAGESELECT : MonoBehaviour {
     {
         if (SaveData.Instance.Life < 1)
         {
-            return;
+            dir.GetComponent<GameDirector>().openpanel();
         }
         else
         {
@@ -50,7 +50,7 @@ public class STAGESELECT : MonoBehaviour {
     {
         if (SaveData.Instance.Life < 1)
         {
-            return;
+            dir.GetComponent<GameDirector>().openpanel();
         }
         else
         {

@@ -12,7 +12,7 @@ public class PlayerData : MonoBehaviour
     GameObject LIFEImage;
     GameObject TIMEtxt;
 
-    GameObject test;
+    //GameObject test;
 
     void Start()
     {
@@ -114,10 +114,11 @@ public class PlayerData : MonoBehaviour
         }
     }
 
+    //ライフ最大回復
     public void MAXLIFE()
     {
         SaveData.Instance.Life = SaveData.Instance.MaxLife;
-        Debug.Log("test-max");
+        Debug.Log("max");
         LIFEPoint();
     }
 
@@ -127,7 +128,7 @@ public class PlayerData : MonoBehaviour
             if (SaveData.Instance.restStaminaTime <= 0)
             {
                 SaveData.Instance.Life++;
-                SaveData.Instance.restStaminaTime = 30;
+                SaveData.Instance.restStaminaTime = 300;
                 LIFEPoint();
                 return;
             }
@@ -141,34 +142,45 @@ public class PlayerData : MonoBehaviour
 
                 TIMEtxt.GetComponent<Text>().text = "あと" + minutes + ":" + second + "";
                 SaveData.Instance.restStaminaTime -= Time.unscaledDeltaTime;
-                Debug.Log(SaveData.Instance.restStaminaTime);
+                //Debug.Log(SaveData.Instance.restStaminaTime);
             }
         }
     //起動時チェック
     void kidouchek()
     {
-        this.test = GameObject.Find("Canvas/test");
+        //this.test = GameObject.Find("Canvas/test");
 
         SaveData.Instance.kaishi = 0;
         long testestes = SaveData.Instance.oldTicks;
         long newTicks = DateTime.Now.Ticks;
         long diff = ((newTicks - testestes) / (1000 * 1000 * 10));
-        int diff2 = ((int)diff- (int)SaveData.Instance.restStaminaTime)/300;
-        float diff3 = ((float)diff - (float)SaveData.Instance.restStaminaTime) % 300;
+        int diff2 = ((int)diff)/300;
+        float diff3 = (float)diff % 300;
+        float diff4 = SaveData.Instance.restStaminaTime- diff3;
 
-        if (diff >= 0)
+        if (diff4<=0){
+            diff2++;
+            diff4 = 300 + diff4;
+            
+        }
+        if (diff2 > 0)
         {
             SaveData.Instance.Life += diff2;
+            
         }
+        
+        SaveData.Instance.restStaminaTime = diff4;
+
+        //max超えない
         if (SaveData.Instance.Life >= SaveData.Instance.MaxLife) {
             SaveData.Instance.Life = SaveData.Instance.MaxLife;
+            SaveData.Instance.restStaminaTime = 300;
         }
-        SaveData.Instance.restStaminaTime -= diff3;
-
-        test.GetComponent<Text>().text = "前回の起動より" + diff+"秒\n"+ diff2+"回復\n"+ diff3+"余り";
-
+        
+        //test.GetComponent<Text>().text = "前回の起動より" + diff+"秒\n"+ diff2+"回復\n"+ diff3+"余り"+"\n"+20%300;
 
 
+        LIFEPoint();
     }
 
 
