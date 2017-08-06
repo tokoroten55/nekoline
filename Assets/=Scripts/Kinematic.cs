@@ -20,8 +20,11 @@ public class Kinematic : MonoBehaviour
     {
         if (other.gameObject.CompareTag("line"))
         {
-        GameObject obj = Instantiate(hoshi,other.transform.position,other.transform.rotation) as GameObject;    
-        Destroy(other.gameObject);
+        //GameObject obj = Instantiate(hoshi,other.transform.position,other.transform.rotation) as GameObject;
+            GameObject obj = Instantiate(hoshi) as GameObject;
+            obj.transform.position = other.transform.position;
+
+            Destroy(other.gameObject);
         }
     }
 }

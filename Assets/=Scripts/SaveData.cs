@@ -40,10 +40,11 @@ public class SaveData : ISerializationCallbackReceiver
     public int kaishi=0;
     public long oldTicks =0;
     public int flag;
-    public int Life=10;
-    public int MaxLife=10;
+    public int Life=5;
+    public int MaxLife=5;
     public int Lifekan=10;
-    public float restStaminaTime = 10;
+    public int Necoin = 5555;
+    public float restStaminaTime = 0;
     public int syoki = 0;
     public List<int> stageList = new List<int>() {0,
         0,1,2,3,4,5,6,8,10,12,//27
@@ -179,9 +180,10 @@ public class SaveData : ISerializationCallbackReceiver
     /// </summary>
     public void Save()
     {
-        
+        SetClose();
         _jsonText = JsonUtility.ToJson(this);
         File.WriteAllText(GetSaveFilePath(), _jsonText);
+        Debug.Log("save完了");
     }
 
     //=================================================================================
@@ -219,6 +221,7 @@ public class SaveData : ISerializationCallbackReceiver
 
     public void SetClose()
     {
+        System.DateTime now = System.DateTime.Now;
         oldTicks = DateTime.Now.Ticks;
         return;
     }

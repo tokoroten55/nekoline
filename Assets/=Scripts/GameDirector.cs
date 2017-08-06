@@ -40,6 +40,11 @@ public class GameDirector : MonoBehaviour {
     public AudioClip ClearSE;
 
     GameObject ContinuePanel;
+
+    GameObject infoPanel;
+    GameObject infotext;
+
+
     public GameObject kamihubuki;
 
 
@@ -118,6 +123,11 @@ public class GameDirector : MonoBehaviour {
         //コンティニューパネル
         this.ContinuePanel = GameObject.Find("ContinuePanel");
         ContinuePanel.SetActive(false);
+
+        //インフォパネル
+        this.infotext = GameObject.Find("infoPanel/Text");
+        this.infoPanel = GameObject.Find("infoPanel");
+        infoPanel.SetActive(false);
     }
 
 
@@ -335,21 +345,36 @@ public class GameDirector : MonoBehaviour {
         REPanel.SetActive(true);//開く
     }
 
+
+    //インフォパネル
+    public void Info01() {
+        this.infotext.GetComponent<Text>().text = "ライフ回復したよ♪";
+        infoPanel.SetActive(true);
+    }
+    public void Info02()
+    {
+        this.infotext.GetComponent<Text>().text = "猫缶が足りません|дﾟ)";
+        infoPanel.SetActive(true);
+    }
+
     //ポーズボタン
     public void onClick()
     {
+        SoundManager.Instance.PlaySE(3);
         //Time.timeScale=0の場合停止する
         if (Time.timeScale == 0)
         {
-            
+            LIFEPanel.GetComponent<Panel>().panel();
             Time.timeScale = 1;
             PausePanel.SetActive(false);
+            
         }
         else
         {
-            
+            LIFEPanel.GetComponent<Panel>().panel2();
             Time.timeScale = 0;
             PausePanel.SetActive(true);
+            
         }
     }
 }

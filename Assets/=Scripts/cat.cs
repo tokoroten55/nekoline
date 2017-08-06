@@ -9,7 +9,7 @@ public class cat : MonoBehaviour
     public GameObject bakuhatsu;
     Rigidbody2D rigid2D;
     Animator animator;
-    float walkForce = 15f;
+    float walkForce = 20f;
     float upForce = 0;
     float key = 1;
     float size;

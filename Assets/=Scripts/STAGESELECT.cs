@@ -48,6 +48,7 @@ public class STAGESELECT : MonoBehaviour {
 
     public void Retry()
     {
+        SoundManager.Instance.PlaySE(3);
         if (SaveData.Instance.Life < 1)
         {
             dir.GetComponent<GameDirector>().openpanel();

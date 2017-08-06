@@ -107,6 +107,7 @@
     <Compile Include="Assets\=Scripts\STAGESELECT.cs" />
     <Compile Include="Assets\=Scripts\SaveData.cs" />
     <Compile Include="Assets\=Scripts\ScrollButton.cs" />
+    <Compile Include="Assets\=Scripts\SelectInfo.cs" />
     <Compile Include="Assets\=Scripts\SoundManager.cs" />
     <Compile Include="Assets\=Scripts\StaminaManager.cs" />
     <Compile Include="Assets\=Scripts\block01.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="Assets\=Scripts\block03.cs" />
     <Compile Include="Assets\=Scripts\cat.cs" />
     <Compile Include="Assets\=Scripts\drawPhysicsLine.cs" />
+    <Compile Include="Assets\=Scripts\info.cs" />
     <Compile Include="Assets\=Scripts\ironohenkou.cs" />
     <Compile Include="Assets\=Scripts\kaiten.cs" />
     <Compile Include="Assets\Fade\Scripts\Fade.cs" />

@@ -139,7 +139,7 @@ public class ScrollButton : MonoBehaviour
 
     public void OnClick(int no)
     {
-
+        SoundManager.Instance.PlaySE(1);
 
         if (SaveData.Instance.Life < 1)
         {
@@ -169,6 +169,7 @@ public class ScrollButton : MonoBehaviour
 
     public void MAINButton()
     {
+        SoundManager.Instance.PlaySE(1);
         CharPanel.SetActive(false);
         ShopPanel.SetActive(false);
         MAINPanel.SetActive(true);
@@ -178,6 +179,7 @@ public class ScrollButton : MonoBehaviour
     }
     public void CharButton()
     {
+        SoundManager.Instance.PlaySE(1);
         CharPanel.SetActive(true);
         ShopPanel.SetActive(false);
         MAINPanel.SetActive(false);
@@ -187,6 +189,7 @@ public class ScrollButton : MonoBehaviour
     }
     public void ShopButton()
     {
+        SoundManager.Instance.PlaySE(1);
         CharPanel.SetActive(false);
         ShopPanel.SetActive(true);
         MAINPanel.SetActive(false);
@@ -196,6 +199,7 @@ public class ScrollButton : MonoBehaviour
     }
     public void SpecialButton()
     {
+        SoundManager.Instance.PlaySE(1);
         CharPanel.SetActive(false);
         ShopPanel.SetActive(false);
         MAINPanel.SetActive(false);
@@ -205,6 +209,7 @@ public class ScrollButton : MonoBehaviour
     }
     public void ReviewButton()
     {
+        SoundManager.Instance.PlaySE(1);
         CharPanel.SetActive(false);
         ShopPanel.SetActive(false);
         MAINPanel.SetActive(false);
@@ -214,6 +219,7 @@ public class ScrollButton : MonoBehaviour
     }
     public void hard()
     {
+        SoundManager.Instance.PlaySE(1);
         CharPanel.SetActive(false);
         ShopPanel.SetActive(false);
         MAINPanel.SetActive(false);

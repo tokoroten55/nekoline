@@ -7,6 +7,7 @@ public class CMkaihuku : MonoBehaviour {
     GameObject PlayerData2;
     GameObject GameDirector2;
 
+
     void Start () {
         this.PlayerData2 = GameObject.Find("PlayerData");
         this.GameDirector2 = GameObject.Find("GameDirector");
@@ -25,6 +26,7 @@ public class CMkaihuku : MonoBehaviour {
     {
         if (SaveData.Instance.Lifekan >= 1)
         {
+            GameDirector2.GetComponent<GameDirector>().Info01();
             SaveData.Instance.Lifekan--;
             PlayerData2.GetComponent<PlayerData>().MAXLIFE();
             PlayerData2.GetComponent<PlayerData>().LIFEPoint();
@@ -33,6 +35,7 @@ public class CMkaihuku : MonoBehaviour {
         }
         else
         {
+            GameDirector2.GetComponent<GameDirector>().Info02();
             Debug.Log("猫缶不足");
         }
     }
