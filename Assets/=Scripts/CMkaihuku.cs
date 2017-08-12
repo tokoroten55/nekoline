@@ -30,6 +30,7 @@ public class CMkaihuku : MonoBehaviour {
             SaveData.Instance.Lifekan--;
             PlayerData2.GetComponent<PlayerData>().MAXLIFE();
             PlayerData2.GetComponent<PlayerData>().LIFEPoint();
+            PlayerData2.GetComponent<PlayerData>().coinkan();
             PlayerData2.GetComponent<PlayerData>().point();
             GameDirector2.GetComponent<GameDirector>().closepanel();
         }

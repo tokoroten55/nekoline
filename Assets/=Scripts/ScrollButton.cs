@@ -22,8 +22,9 @@ public class ScrollButton : MonoBehaviour
     GameObject MAIN2Panel;
     GameObject SpecialPanel;
     GameObject ReviewPanel;
+    public int BottonClick=0;
+    GameObject menu2;
 
-    
 
     public GameObject PlayerData;
     public GameObject Fade;
@@ -31,7 +32,8 @@ public class ScrollButton : MonoBehaviour
     
     void Start()
     {
-
+        Time.timeScale = 1;
+        this.menu2 = GameObject.Find("menu");
         SoundManager.Instance.PlayBGM(0);
         //Content取得(ボタンを並べる場所)
         content[0] = GameObject.Find("MAINPanel/ScrollView/Viewport/Content").GetComponent<RectTransform>();
@@ -140,13 +142,14 @@ public class ScrollButton : MonoBehaviour
     public void OnClick(int no)
     {
         SoundManager.Instance.PlaySE(1);
-
-        if (SaveData.Instance.Life < 1)
+        if (SaveData.Instance.Life < 1 | BottonClick == 1)
         {
+            menu2.GetComponent<SelectInfo>().rePnel();
             return;
         }
         else
         {
+            BottonClick = 1;
             SoundManager.Instance.PlayVoice(2);
             SaveData.Instance.Life--;
             PlayerData.GetComponent<PlayerData>().LIFEPoint();

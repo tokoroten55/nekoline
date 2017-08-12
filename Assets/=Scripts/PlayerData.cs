@@ -6,7 +6,6 @@ using System;
 
 public class PlayerData : MonoBehaviour
 {
-
     static int Tpoint;
     GameObject tpoint;
     GameObject LIFEImage;
@@ -15,13 +14,16 @@ public class PlayerData : MonoBehaviour
     GameObject KANImage;
     //GameObject test;
 
-    void Start()
+    void Awake()
     {
         System.DateTime now = System.DateTime.Now;
         if (SaveData.Instance.kaishi == 1)
         {
             kidouchek();
         }
+    }
+    private void Start()
+    {
         LIFEPoint();
         this.tpoint = GameObject.Find("LIFECanvas/LIFEPanel/POINTImage/POINTText");
         this.COINImage = GameObject.Find("LIFECanvas/LIFEPanel/COINImage/Text");
@@ -87,8 +89,6 @@ public class PlayerData : MonoBehaviour
 
         }
         SaveData.Instance.flag = Tpoint;
-
-        SaveData.Instance.Save();
         this.tpoint.GetComponent<Text>().text = "point " + Tpoint;
 
     }
@@ -185,8 +185,7 @@ public class PlayerData : MonoBehaviour
             SaveData.Instance.Life = SaveData.Instance.MaxLife;
             SaveData.Instance.restStaminaTime = 300;
         }
-
-        //test.GetComponent<Text>().text = "前回の起動より" + diff+"秒\n"+ diff2+"回復\n"+ diff3+"余り"+"\n"+20%300;
+        
         LIFEPoint();
         SaveData.Instance.kaishi = 0;
     }

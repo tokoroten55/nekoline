@@ -104,7 +104,6 @@
     <Compile Include="Assets\=Scripts\PauseButton.cs" />
     <Compile Include="Assets\=Scripts\PlayerData.cs" />
     <Compile Include="Assets\=Scripts\PlayerScript.cs" />
-    <Compile Include="Assets\=Scripts\STAGESELECT.cs" />
     <Compile Include="Assets\=Scripts\SaveData.cs" />
     <Compile Include="Assets\=Scripts\ScrollButton.cs" />
     <Compile Include="Assets\=Scripts\SelectInfo.cs" />
@@ -118,6 +117,7 @@
     <Compile Include="Assets\=Scripts\info.cs" />
     <Compile Include="Assets\=Scripts\ironohenkou.cs" />
     <Compile Include="Assets\=Scripts\kaiten.cs" />
+    <Compile Include="Assets\=Scripts\koban.cs" />
     <Compile Include="Assets\Fade\Scripts\Fade.cs" />
     <Compile Include="Assets\Fade\Scripts\FadeImage.cs" />
     <Compile Include="Assets\Fade\Scripts\FadeUI.cs" />

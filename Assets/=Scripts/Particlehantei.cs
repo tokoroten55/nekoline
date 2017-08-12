@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Particlehantei:MonoBehaviour {
-    public GameDirector dir;
+    GameObject dir;
     public AudioClip OkSE;
     void Start()
     {
-      
+      this.dir = GameObject.Find("GameDirector");
+       
     }
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -15,7 +16,7 @@ public class Particlehantei:MonoBehaviour {
         {
             AudioSource.PlayClipAtPoint(OkSE, transform.position);
             Object.Destroy(other.gameObject);
-            dir.nokori();
+            dir.GetComponent<GameDirector>().nokori();
         }
     }
 }

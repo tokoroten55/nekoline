@@ -6,11 +6,16 @@ using UnityEngine.SceneManagement;
 
 public class GameDirector : MonoBehaviour {
     public int stage = 1;
+    int nextstage;
     enum State
     {
         Ready, Play, GameOver, Clear
     }
     State state;
+
+    GameObject hukidashi;
+    GameObject catpointText;
+    GameObject catpoint;
 
 
     GameObject ani1;
@@ -31,9 +36,11 @@ public class GameDirector : MonoBehaviour {
     GameObject ClearPanel;
     GameObject ClearPanelStageText1;
     GameObject ClearPanelStageText2;
+    GameObject ClearPanelkoban;
     GameObject LIFEPanel;
     GameObject PlayerData;
     GameObject REPanel;
+    GameObject PerfectBonus;
 
     GameObject ClearPanelFast;
     GameObject ClearPanelDeath;
@@ -43,13 +50,14 @@ public class GameDirector : MonoBehaviour {
 
     GameObject infoPanel;
     GameObject infotext;
+    //ロード
+    private AsyncOperation async;
+    GameObject LoadingUi;
+    public Slider Slider;//スライダー
 
 
-    public GameObject kamihubuki;
-
-
+    public GameObject kamihubuki;//紙吹雪
     public GameObject nekoPrefab;
-
     public float span = 1.5f;
     float delta = 10;
 
@@ -67,10 +75,15 @@ public class GameDirector : MonoBehaviour {
     int Perfect1 = 0;
     int Perfect2 = 0;
 
+    //ねこばん
+    int koban = 0;
+
 
 
     private void Awake()
     {
+        nextstage = stage + 1;
+
         //ライフパネル
         this.LIFEPanel = GameObject.Find("LIFEPanel");
         this.PlayerData = GameObject.Find("PlayerData");
@@ -106,10 +119,12 @@ public class GameDirector : MonoBehaviour {
         this.StartPanelStageText1.GetComponent<Text>().text = "Stage" + stage + " Clear";
 
         this.ClearPanelFast = GameObject.Find("ClearPanel/Image2/Text");
-        this.ClearPanelFast.GetComponent<Text>().text = "★ Fast clear";
+        this.ClearPanelFast.GetComponent<Text>().text = "Fast clear";
         this.ClearPanelDeath = GameObject.Find("ClearPanel/Image3/Text");
-        this.ClearPanelDeath.GetComponent<Text>().text = "★ No Died";
-
+        this.ClearPanelDeath.GetComponent<Text>().text = "No Died";
+        this.ClearPanelkoban = GameObject.Find("ClearPanel/COINText");
+        this.PerfectBonus = GameObject.Find("ClearPanel/Perfect Bonus");
+        PerfectBonus.SetActive(false);
 
         this.ani1 = GameObject.Find("ClearPanel/Image1");
         ani1.SetActive(false);
@@ -128,13 +143,27 @@ public class GameDirector : MonoBehaviour {
         this.infotext = GameObject.Find("infoPanel/Text");
         this.infoPanel = GameObject.Find("infoPanel");
         infoPanel.SetActive(false);
+
+        //ロードパネル
+        LoadingUi = GameObject.Find("LoadPanel");
+        LoadingUi.SetActive(false);
+
+        //キャットポイント
+        catpoint = GameObject.Find("CATpoint");
+        //hukidashi = GameObject.Find("CATpoint/hukidashi");
+        catpointText = GameObject.Find("CATpoint/hukidashi/deru");
+        
     }
 
 
 
 
-    void Start() {
+    void Start()
+    {
         maxcat = zan2;
+        this.catpointText.GetComponent<TextMesh>().text = "×"+maxcat;
+
+
         this.timerText.GetComponent<Text>().text = this.time.ToString("F0");
         this.nokoriText.GetComponent<TextMesh>().text = zan + "/" + zan2;
 
@@ -178,9 +207,12 @@ public class GameDirector : MonoBehaviour {
                 {
                     this.delta = 0;
                     maxcat--;
-
-                    GameObject go = Instantiate(nekoPrefab) as GameObject;
+                    this.catpointText.GetComponent<TextMesh>().text = "×" + maxcat;
+                    GameObject go = Instantiate(nekoPrefab,catpoint.transform.position, Quaternion.identity) as GameObject;
                     go.transform.position = transform.position;
+
+                    if (maxcat == 0) { catpoint.SetActive(false); }
+
 
                 }
                 //時間管理
@@ -224,10 +256,17 @@ public class GameDirector : MonoBehaviour {
     //猫残数復活
     public void hukkatu()
     {
+        this.delta = -0.5f;
         died++;
         maxcat++;
+        catpoint.SetActive(true);
+        this.catpointText.GetComponent<TextMesh>().text = "×" + maxcat;
     }
-
+    //小判get
+    public void kobanget()
+    {
+        koban++;
+    }
 
 
     //タイムオーバー
@@ -269,21 +308,26 @@ public class GameDirector : MonoBehaviour {
         {
             lifeplus();
         }
+        SaveData.Instance.Necoin += koban;
         SaveData.Instance.Save();
 
 
         Invoke("select", 3.0f);
     }
 
-    //ステージセレクトへ
+    //クリア後セレクト
     void select()
     {
         //クリアパネル出現
         if (LIFEPanel) LIFEPanel.GetComponent<Panel>().panel2();
         ClearPanel.SetActive(true);
+        Invoke("select2", 1.0f);
+    }
+    void select2() { 
         ani1.SetActive(true);
+        this.ClearPanelkoban.GetComponent<Text>().text = "GET ×" + koban;
         this.StartPanelStageText2 = GameObject.Find("ClearPanel/Text");
-        this.StartPanelStageText2.GetComponent<Text>().text = "Clear Time  " + time2.ToString("f2");
+        this.StartPanelStageText2.GetComponent<Text>().text = "Clear Time " + time2.ToString("f2");
         //ボタン演出
         Invoke("button2", 1.0f);
     }
@@ -291,7 +335,7 @@ public class GameDirector : MonoBehaviour {
     {
         PlayerData.GetComponent<PlayerData>().LIFEPoint();
         PlayerData.GetComponent<PlayerData>().point();
-
+        PlayerData.GetComponent<PlayerData>().coinkan();
         if (10 >= time)
         {
             this.ClearPanelFast.GetComponent<Text>().text = "✖   <color=#000000>Not fast</color>";
@@ -308,11 +352,18 @@ public class GameDirector : MonoBehaviour {
             this.ClearPanelDeath.GetComponent<Text>().text = "✖   <color=#000000><B>" + died + "</B> Died</color>";
         }
         ani3.SetActive(true);
-        if (Perfect1 == 1 && Perfect2 == 1) {
-            this.StartPanelStageText2 = GameObject.Find("ClearPanel/Perfect Bonus");
-            this.StartPanelStageText2.GetComponent<Text>().text = "Perfect Bonus LIFE +<size=150>1</size>";
+        Invoke("button4", 1.0f);
+    }
+    void button4()
+    {
+    if (Perfect1 == 1 && Perfect2 == 1)
+    {
+            this.PerfectBonus.GetComponent<Text>().text = "Perfect Bonus\nLIFE +<size=150>1</size>";
+            PerfectBonus.SetActive(true);
         }
     }
+
+
 
 
     //ステージクリアのライフ処理
@@ -335,7 +386,7 @@ public class GameDirector : MonoBehaviour {
         ContinuePanel.SetActive(true);
     }
 
-    //パネルを閉じる
+    //LIFEが足りないパネルを
     public void closepanel()
     {
         REPanel.SetActive(false);//閉じる
@@ -360,7 +411,7 @@ public class GameDirector : MonoBehaviour {
     //ポーズボタン
     public void onClick()
     {
-        SoundManager.Instance.PlaySE(3);
+       // if (GameObject.Find("SoundManager") != null) { } else { SoundManager.Instance.PlaySE(2); }
         //Time.timeScale=0の場合停止する
         if (Time.timeScale == 0)
         {
@@ -374,7 +425,97 @@ public class GameDirector : MonoBehaviour {
             LIFEPanel.GetComponent<Panel>().panel2();
             Time.timeScale = 0;
             PausePanel.SetActive(true);
-            
+        }
+    }
+
+    //次のステージへ
+    public void Stagegogo()
+    {
+        if (nextstage > 20) nextstage = 1;//最終ステージチェック
+        Invoke("stagego", 1f);
+    }
+    void stagego()
+    {
+        if (SaveData.Instance.Life < 1)
+        {
+            openpanel();
+        }
+        else
+        {
+            SaveData.Instance.Life--;
+            PlayerData.GetComponent<PlayerData>().LIFEPoint();
+            SaveData.Instance.Save();
+            LoadNextScene();
+        }
+    }
+    void LoadNextScene()
+    {
+        LoadingUi.SetActive(true);
+        StartCoroutine(LoadScene2());
+    }
+
+    IEnumerator LoadScene2()
+    {
+        async = SceneManager.LoadSceneAsync("Stage" + nextstage);
+        while (!async.isDone)
+        {
+            Slider.value = async.progress;
+            yield return null;
+        }
+    }
+
+
+    //ステージセレクトへ
+    public void selectgogo()
+    {
+        Time.timeScale = 1;
+        selectScene();
+    }
+    public void selectScene()
+    {
+        LoadingUi.SetActive(true);
+        StartCoroutine(LoadScene());
+    }
+
+    IEnumerator LoadScene()
+    {
+        async = SceneManager.LoadSceneAsync("_STAGE SELECT");
+        while (!async.isDone)
+        {
+            Slider.value = async.progress;
+            yield return null;
+        }
+    }
+
+    //リトライ
+    public void Retry()
+    {
+       // if (GameObject.Find("SoundManager") != null) { } else { SoundManager.Instance.PlaySE(2); }
+        if (SaveData.Instance.Life < 1)
+        {
+            openpanel();
+        }
+        else
+        {
+            SaveData.Instance.Life--;
+            PlayerData.GetComponent<PlayerData>().LIFEPoint();
+            SaveData.Instance.Save();
+            RetryScene();
+        }
+    }
+    void RetryScene()
+    {
+        LoadingUi.SetActive(true);
+        StartCoroutine(RetryScene2());
+    }
+
+    IEnumerator RetryScene2()
+    {
+        async = SceneManager.LoadSceneAsync("Stage" + stage);
+        while (!async.isDone)
+        {
+            Slider.value = async.progress;
+            yield return null;
         }
     }
 }

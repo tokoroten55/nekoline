@@ -70,6 +70,7 @@ public class cat : MonoBehaviour
     {
 
         if (collision.gameObject.CompareTag("teki")) { death(); }
+        if (collision.gameObject.CompareTag("koban")) { coinge(); }
     }
 
     void death()
@@ -87,8 +88,15 @@ public class cat : MonoBehaviour
                 Dire.GetComponent<GameDirector>().hukkatu();
             }
         }
-
     }
+
+
+    void coinge()
+    {
+        Dire.GetComponent<GameDirector>().kobanget();
+    }
+
+
     void OnParticleCollision(GameObject other)
     {
         death();
