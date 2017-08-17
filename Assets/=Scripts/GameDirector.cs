@@ -338,7 +338,7 @@ public class GameDirector : MonoBehaviour {
         PlayerData.GetComponent<PlayerData>().coinkan();
         if (10 >= time)
         {
-            this.ClearPanelFast.GetComponent<Text>().text = "✖   <color=#000000>Not fast</color>";
+            this.ClearPanelFast.GetComponent<Text>().text = "<color=#ff0000>Not fast</color>";
         }
         ani2.SetActive(true);
         Invoke("button3", 1.0f);
@@ -349,7 +349,7 @@ public class GameDirector : MonoBehaviour {
 
         if (died > 0)
         {
-            this.ClearPanelDeath.GetComponent<Text>().text = "✖   <color=#000000><B>" + died + "</B> Died</color>";
+            this.ClearPanelDeath.GetComponent<Text>().text = "<color=#ff0000><B>" + died + "</B> Died</color>";
         }
         ani3.SetActive(true);
         Invoke("button4", 1.0f);
@@ -431,7 +431,7 @@ public class GameDirector : MonoBehaviour {
     //次のステージへ
     public void Stagegogo()
     {
-        if (nextstage > 20) nextstage = 1;//最終ステージチェック
+        if (nextstage >= 26) nextstage = 1;//最終ステージチェック
         Invoke("stagego", 0.1f);
     }
     void stagego()

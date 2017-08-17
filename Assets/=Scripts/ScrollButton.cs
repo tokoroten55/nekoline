@@ -71,7 +71,7 @@ public class ScrollButton : MonoBehaviour
                 if (value1 < value2)
                 {
                     GameObject btn1 = (GameObject)Instantiate(btnPref[0]); btn1.transform.SetParent(content[y], false);
-                    btn1.transform.GetComponentInChildren<Text>().text = "<size=100>" + Tno+ "</size>\n point" + value2.ToString();
+                    btn1.transform.GetComponentInChildren<Text>().text = "<size=80>" + Tno+ "</size>\n\npoint" + value2.ToString();
 
                 }
                 else

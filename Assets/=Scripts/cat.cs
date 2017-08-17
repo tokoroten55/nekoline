@@ -69,7 +69,7 @@ public class cat : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
 
-        if (collision.gameObject.CompareTag("teki")) { death(); }
+        if (collision.gameObject.CompareTag("teki")| collision.gameObject.CompareTag("teki2")) { death(); }
         if (collision.gameObject.CompareTag("koban")) { coinge(); }
     }
 

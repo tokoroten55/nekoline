@@ -39,4 +39,10 @@ public class ironohenkou : MonoBehaviour {
         this.GetComponent<Rigidbody2D>().isKinematic = false;
         Destroy(this.gameObject, 2f);
     }
+
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("teki2")) { Destroy(gameObject); }
+    }
 }

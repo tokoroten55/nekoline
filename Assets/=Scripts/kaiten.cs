@@ -8,6 +8,7 @@ public class kaiten : MonoBehaviour
     float count;
     public float speed = 3f;
     int hrag = 0;
+    public int houkou = 1;
     public AudioClip boSE;
     SpriteRenderer MainSpriteRenderer;
     public Sprite StandbySprite;
@@ -42,11 +43,11 @@ public class kaiten : MonoBehaviour
 
     public IEnumerator maware()
     {
-        for (count = 0; count < 90f; count += speed)
+        for (count = 0; count <= 90f; count += speed)
         {
-            obj.transform.Rotate(new Vector3( 0f, 0f ,- speed), Space.World);
+            obj.transform.Rotate(new Vector3( 0f, 0f ,- speed*houkou), Space.World);
             yield return null;
         }
-        obj.transform.Rotate(new Vector3( 0f, 0f, count - 90f), Space.World);
+        obj.transform.Rotate(new Vector3( 0f, 0f, count - 90f+houkou), Space.World);
     }
 }

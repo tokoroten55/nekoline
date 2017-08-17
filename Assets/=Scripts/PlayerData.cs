@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
 
 public class PlayerData : MonoBehaviour
 {
@@ -117,7 +118,6 @@ public class PlayerData : MonoBehaviour
         for (int i = 0; i < SaveData.Instance.stage3.Length; i++)
         {
             SaveData.Instance.stage3[i] = 0;
-
         }
     }
 
@@ -206,4 +206,23 @@ public class PlayerData : MonoBehaviour
         Debug.Log("save");
     }
 
-}
+    //データクリア
+    public void dateclear()
+    {
+        syoki();
+        SaveData.Instance.kaishi = 0;
+        SaveData.Instance.oldTicks = 0;
+        SaveData.Instance.Life = 5;
+        SaveData.Instance.MaxLife = 5;
+        SaveData.Instance.Lifekan = 10;
+        SaveData.Instance.Necoin = 5555;
+        SaveData.Instance.restStaminaTime = 0;
+        SaveData.Instance.syoki = 0;
+        SaveData.Instance.stageList[21] = 1;
+        SaveData.Instance.stageList[22] = 1;
+        SaveData.Instance.stageList[23] = 1;
+        SaveData.Instance.stageList[24] = 1;
+        SaveData.Instance.stageList[25] = 1;
+        SceneManager.LoadScene("StartGame");
+    }
+    }
