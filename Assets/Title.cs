@@ -12,6 +12,7 @@ public class Title : MonoBehaviour
 
     private void Start()
     {
+        SaveData.Instance.kaishi = 1;
         LoadingUi = GameObject.Find("LoadPanel");
         LoadingUi.SetActive(false);
     }

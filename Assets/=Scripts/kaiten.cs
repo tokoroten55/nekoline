@@ -15,7 +15,7 @@ public class kaiten : MonoBehaviour
     
     void Start()
     {
-        MainSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        MainSpriteRenderer = gameObject.GetComponent< SpriteRenderer>();
     }
 
     void Update() {

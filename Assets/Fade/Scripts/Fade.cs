@@ -109,7 +109,7 @@ public class Fade : MonoBehaviour
     }
     public void NextStage()
     {
-        FadeIn(1.8f); return;
+        FadeIn(2.8f); return;
        // Invoke("stage", 2f);
     }
     public void stage()

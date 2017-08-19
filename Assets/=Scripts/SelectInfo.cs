@@ -11,6 +11,7 @@ public class SelectInfo : MonoBehaviour
     GameObject PlayerData;
     GameObject REPanel;
 
+
     void Start()
     {
         this.infotext = GameObject.Find("infoPanel/Text");

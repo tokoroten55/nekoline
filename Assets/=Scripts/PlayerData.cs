@@ -211,7 +211,6 @@ public class PlayerData : MonoBehaviour
     {
         syoki();
         SaveData.Instance.kaishi = 0;
-        SaveData.Instance.oldTicks = 0;
         SaveData.Instance.Life = 5;
         SaveData.Instance.MaxLife = 5;
         SaveData.Instance.Lifekan = 10;
@@ -223,6 +222,12 @@ public class PlayerData : MonoBehaviour
         SaveData.Instance.stageList[23] = 1;
         SaveData.Instance.stageList[24] = 1;
         SaveData.Instance.stageList[25] = 1;
+        SaveData.Instance.stageList[26] = 1;
+        SaveData.Instance.stageList[27] = 1;
+        SaveData.Instance.stageList[28] = 1;
+        SaveData.Instance.stageList[29] = 1;
+        SaveData.Instance.stageList[30] = 1;
+        SaveData.Instance.stageList[31] = 1;
         SceneManager.LoadScene("StartGame");
     }
     }

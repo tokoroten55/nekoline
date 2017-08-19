@@ -431,7 +431,7 @@ public class GameDirector : MonoBehaviour {
     //次のステージへ
     public void Stagegogo()
     {
-        if (nextstage >= 26) nextstage = 1;//最終ステージチェック
+        if (nextstage >= 31) nextstage = 1;//最終ステージチェック
         Invoke("stagego", 0.1f);
     }
     void stagego()

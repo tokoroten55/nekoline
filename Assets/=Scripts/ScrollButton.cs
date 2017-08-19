@@ -29,9 +29,15 @@ public class ScrollButton : MonoBehaviour
     public GameObject PlayerData;
     public GameObject Fade;
     public RectTransform[] content = new RectTransform[3];
-    
+    GameObject onnanoko;
+    GameObject nekoImage;
+
     void Start()
     {
+        this.onnanoko = GameObject.Find("onnanoko");
+        this.nekoImage = GameObject.Find("nekoImage");
+        nekoImage.SetActive(false);
+
         Time.timeScale = 1;
         this.menu2 = GameObject.Find("menu");
         SoundManager.Instance.PlayBGM(0);
@@ -150,15 +156,18 @@ public class ScrollButton : MonoBehaviour
         else
         {
             BottonClick = 1;
-            SoundManager.Instance.PlayVoice(2);
+            onnanoko.GetComponent<onnanoko>().retgo();
+            nekoImage.SetActive(true);
             SaveData.Instance.Life--;
             PlayerData.GetComponent<PlayerData>().LIFEPoint();
             SaveData.Instance.Save();
         }
-            //フェード
+        
+        //フェード
         this.Fade = GameObject.Find("FadeCanvas");
         Fade.GetComponent<Fade>().NextStage();
-        StartCoroutine(DelayMethod(2f, () =>
+        SoundManager.Instance.PlayVoice(2);
+        StartCoroutine(DelayMethod(3f, () =>
         {
             SceneManager.LoadScene("Stage" + no);
         }));
