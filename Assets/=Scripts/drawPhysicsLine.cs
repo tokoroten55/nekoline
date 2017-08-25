@@ -4,7 +4,7 @@ using System.Collections;
 public class drawPhysicsLine : MonoBehaviour
 {
 
-    public GameObject linePrefab;
+   public GameObject linePrefab;
     public float lineLength = 0.1f;
     public float lineWidth = 0.1f;
 
@@ -39,15 +39,18 @@ public class drawPhysicsLine : MonoBehaviour
 
                 if ((endPos - startPos).magnitude > lineLength)
                 {
-                    GameObject obj = Instantiate(linePrefab, transform.position, transform.rotation) as GameObject;
-                    obj.transform.position = (startPos + endPos) / 2;
-                    obj.transform.right = (endPos - startPos).normalized;
+                    //Pool pool = GetComponent<Pool>();
+                    GameObject obj = GameObject.Instantiate(linePrefab);
+                    
+                        obj.transform.position = (startPos + endPos) / 2;
+                        obj.transform.right = (endPos - startPos).normalized;
 
-                    obj.transform.localScale = new Vector3((endPos - startPos).magnitude, lineWidth, lineWidth);
+                        obj.transform.localScale = new Vector3((endPos - startPos).magnitude, lineWidth, lineWidth);
 
-                    obj.transform.parent = this.transform;
+                        obj.transform.parent = this.transform;
 
-                    touchPos = endPos;
+                        touchPos = endPos;
+                    
                 }
             }
         }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class block02 : MonoBehaviour {
 
+    //うごくブロック
     Vector3 startPos;
 
 

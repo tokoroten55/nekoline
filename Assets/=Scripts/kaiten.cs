@@ -48,6 +48,6 @@ public class kaiten : MonoBehaviour
             obj.transform.Rotate(new Vector3( 0f, 0f ,- speed*houkou), Space.World);
             yield return null;
         }
-        obj.transform.Rotate(new Vector3( 0f, 0f, count - 90f+houkou), Space.World);
+        //obj.transform.Rotate(new Vector3( 0f, 0f, count - 90f+houkou), Space.World);
     }
 }

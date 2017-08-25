@@ -32,8 +32,8 @@ public class Bom : MonoBehaviour {
         float pos = transform.position.y;
         if (pos <= -5.5)
         {
-            Destroy(gameObject);
-        }
+            gameObject.SetActive(false);
+       }
 
 
     }
@@ -50,6 +50,7 @@ public class Bom : MonoBehaviour {
         GameObject pr = Instantiate(per) as GameObject;
         pr.transform.position = transform.position;
         AudioSource.PlayClipAtPoint(BomSE, transform.position);
+        //this.gameObject.SetActive(false);
         Destroy(gameObject);
 
     }

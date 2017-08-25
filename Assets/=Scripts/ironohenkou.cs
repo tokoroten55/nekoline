@@ -37,7 +37,15 @@ public class ironohenkou : MonoBehaviour {
     private void Dest()
     {
         this.GetComponent<Rigidbody2D>().isKinematic = false;
-        Destroy(this.gameObject, 2f);
+        Invoke("Kieru", 1.0f);
+    }
+
+    private void Kieru()
+    {
+        //delta = 0;
+        //GetComponent<Renderer>().material.color = Color.red;
+        //this.GetComponent<Rigidbody2D>().isKinematic = true;
+        Destroy(gameObject);
     }
 
 
