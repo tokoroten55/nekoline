@@ -68,9 +68,13 @@ public class cat : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-
         if (collision.gameObject.CompareTag("teki")| collision.gameObject.CompareTag("teki2")| collision.gameObject.CompareTag("Boss")) { death(); }
         if (collision.gameObject.CompareTag("koban")) { coinge(); }
+    }
+
+    void OnCollisionStay2D(Collision2D collision)
+    {
+       if (collision.gameObject.CompareTag("line"))this.rigid2D.AddForce(transform.up * 5);
     }
 
     void death()
@@ -89,7 +93,6 @@ public class cat : MonoBehaviour
             }
         }
     }
-
 
     void coinge()
     {

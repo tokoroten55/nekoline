@@ -9,18 +9,20 @@ public class block01 : MonoBehaviour {
 
 
 
-    public float idouryou;
-    public float speed;
+    public float idouryou=0;
+    public float speed=0;
+    public float idouryou2=0;
+    public float speed2=0;
 
-	void Start () {
+    void Start () {
         startPos = transform.localPosition; 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        float z = idouryou * Mathf.Sin(Time.time * speed);
-
-        transform.localPosition = startPos + new Vector3(0, z,2);
+        float x = idouryou2 * Mathf.Sin(Time.time * speed2);
+        float y = idouryou * Mathf.Sin(Time.time * speed);
+        transform.localPosition = startPos + new Vector3(x, y,2);
 
 
 

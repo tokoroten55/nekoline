@@ -213,21 +213,13 @@ public class PlayerData : MonoBehaviour
         SaveData.Instance.kaishi = 0;
         SaveData.Instance.Life = 5;
         SaveData.Instance.MaxLife = 5;
-        SaveData.Instance.Lifekan = 10;
-        SaveData.Instance.Necoin = 5555;
+        SaveData.Instance.Lifekan = 99;
+        SaveData.Instance.Necoin = 0;
         SaveData.Instance.restStaminaTime = 0;
         SaveData.Instance.syoki = 0;
-        SaveData.Instance.stageList[21] = 1;
-        SaveData.Instance.stageList[22] = 1;
-        SaveData.Instance.stageList[23] = 1;
-        SaveData.Instance.stageList[24] = 1;
-        SaveData.Instance.stageList[25] = 1;
-        SaveData.Instance.stageList[26] = 1;
-        SaveData.Instance.stageList[27] = 1;
-        SaveData.Instance.stageList[28] = 1;
-        SaveData.Instance.stageList[29] = 1;
-        SaveData.Instance.stageList[30] = 1;
-        SaveData.Instance.stageList[31] = 1;
+        for (int i = 1; i < 61; i++) { SaveData.Instance.stageList[i] = 0; }
+            SaveData.Instance.stageList[80] = 0;
+
         SceneManager.LoadScene("StartGame");
     }
     }

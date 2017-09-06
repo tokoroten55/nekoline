@@ -14,8 +14,9 @@ public class Kinematic : MonoBehaviour
 	
 	
 	void Update () {
-		
-	}
+
+
+    }
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("line"))
@@ -27,4 +28,5 @@ public class Kinematic : MonoBehaviour
             Destroy(other.gameObject);
         }
     }
+
 }

@@ -111,6 +111,14 @@ public class SoundManager : MonoBehaviour
     // BGM再生
     public void PlayBGM(int index)
     {
+        if (SaveData.Instance.uraomote == 2)
+        {
+            BGMsource.pitch = 1.2f;
+        }
+        else
+        {
+            BGMsource.pitch = 1.0f;
+        }
         if (0 > index || BGM.Length <= index)
         {
             return;

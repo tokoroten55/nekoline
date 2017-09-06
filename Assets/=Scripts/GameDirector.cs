@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameDirector : MonoBehaviour {
     public int stage = 1;
+    int stagehyouki;
     int nextstage;
     enum State
     {
@@ -26,8 +27,9 @@ public class GameDirector : MonoBehaviour {
     GameObject nokoriText;
     GameObject StartPanelStageText1;
     GameObject StartPanelStageText2;
-
+    GameObject StartPanelStageText3;
     GameObject timeover;
+    GameObject annaiText;
     public AudioClip timeSE;
 
     GameObject PausePanel;
@@ -36,11 +38,13 @@ public class GameDirector : MonoBehaviour {
     GameObject ClearPanel;
     GameObject ClearPanelStageText1;
     GameObject ClearPanelStageText2;
+
     GameObject ClearPanelkoban;
     GameObject LIFEPanel;
     GameObject PlayerData;
     GameObject REPanel;
     GameObject PerfectBonus;
+    GameObject nakamaPanel;
 
     GameObject ClearPanelFast;
     GameObject ClearPanelDeath;
@@ -56,18 +60,29 @@ public class GameDirector : MonoBehaviour {
     public Slider Slider;//スライダー
 
 
+
+
+
+    //表ステージ用public
+    public float timeOmote = 90f;//ゲーム時間
+    public float spanOmote = 1.5f;//猫出現速度
+    public int nekosuuOmote = 1;//ステージの最大猫数
+    //裏ステージ用public
+    public float timeUra = 60f;//ゲーム時間
+    public float spanUra = 0.2f;//猫出現速度
+    public int nekosuUra = 3;//ステージの最大猫数
+
     public GameObject kamihubuki;//紙吹雪
     public GameObject nekoPrefab;
-    public float span = 1.5f;
+    float span = 1.5f;
     float delta = 10;
 
-    public float time = 30f;//ゲーム時間
-
-    public float time2 = 0f;
+    float time;//ゲーム時間
+    float time2 = 0f;//クリアまでの時間
     int died = 0;
 
     int zan = 0;
-    public int zan2 = 3;//ステージの最大猫数
+    int zan2;//ステージの最大猫数
     int maxcat;
     //int zancat;
 
@@ -77,12 +92,162 @@ public class GameDirector : MonoBehaviour {
 
     //ねこばん
     int koban = 0;
+    //仲間
+    int nakama = 0;
+    AudioSource audiox;
+
+    string textSt;
+    List<string> TextST = new List<string>() {"",
+       "画面にラインを引いて\nねこをゴールへ誘導しよう！",//01
+        "穴に落下しないように\nうまく誘導してね！",//02
+        "ラインの寿命は基本5秒間だけど\n指2本でタップすれば、すぐに崩すことが出来るよ！",//03
+        "ラインを書けないパネルがあるよ！\n書けないパネルはうまくかわして誘導しよう！",//04
+        "ラインが崩れる1秒前になると\nラインの色がピンクになるので注意してね！",//05
+        "余分なラインを書いてしまうと\nねこの進行を妨げてしまうから慎重にね！",//06
+        "爆弾に触れると、3秒後に爆発するよ！\n着火したらすぐに離れてね！",//07
+        "動くブロックにのって！\nそのままゴールしよう！",//08
+        "足場ラインを引くコツは、\nねこの移動速度と同じくらいがいいかも！？",//09
+        "仲間が捕まっているよ\n仲間を救出してゴールへ誘導してね！",//10
+        "壁面から針が飛び出してるよ\nラインでガードしてゴールを目指そう！！",//11
+        "爆弾をうまく蹴飛ばして\n下の爆弾に誘爆させよう！！",//12
+        "落下するブロックがあるよ\n落下箇所を見極めて攻略しよう！",//13
+        "水が勢いよくながれてるね\nラインで流れをうまく変えてみて！",//14
+        "\n",//15
+        "\n",//16
+        "\n",//17
+        "\n",//18
+        "\n",//19
+        "\n",//20
+        "\n",//21
+        "\n",//22
+        "\n",//23
+        "\n",//24
+        "\n",//25
+        "\n",//26
+        "\n",//27
+        "\n",//28
+        "\n",//29
+        "\n",//30
+        "\n",//31
+        "\n",//32
+        "\n",//33
+        "\n",//34
+        "\n",//35
+        "\n",//36
+        "\n",//37
+        "\n",//38
+        "\n",//39
+        "\n",//40
+        "\n",//41
+        "\n",//42
+        "\n",//43
+        "\n",//44
+        "\n",//45
+        "\n",//46
+        "\n",//47
+        "\n",//48
+        "\n",//49
+        "\n",//50
+        "\n",//51
+        "\n",//52
+        "\n",//53
+        "\n",//54
+        "\n",//55
+        "\n",//56
+        "\n",//57
+        "\n",//58
+        "\n",//59
+        "\n",//60
+        "\n",//61
+        "\n",//62
+        "\n",//63
+        "\n",//64
+        "\n",//65
+        "\n",//66
+        "\n",//67
+        "\n",//68
+        "\n",//69
+        "\n",//70
+        "\n",//71
+        "\n",//72
+        "\n",//73
+        "\n",//74
+        "\n",//75
+        "\n",//76
+        "\n",//77
+        "\n",//78
+        "\n",//79
+        "\n",//80
+        "\n",//81
+        "\n",//82
+        "\n",//83
+        "\n",//84
+        "\n",//85
+        "\n",//86
+        "\n",//87
+        "\n",//88
+        "\n",//89
+        "\n",//90
+        "\n",//91
+        "\n",//92
+        "\n",//93
+        "\n",//94
+        "\n",//95
+        "\n",//96
+        "\n",//97
+        "\n",//98
+        "\n",//99
+        "\n",//100
+
+        "\n",//sp1
+        "\n",//sp2
+        "\n",//sp3
+        "\n",//sp4
+        "\n",//sp5
+        "\n",//sp6
+        "\n",//sp7
+        "\n",//sp8
+        "\n",//sp9
+        "\n",//sp10
+
+    };
+
 
 
 
     private void Awake()
     {
+        //スタートテキスト
+        if (stage <= 100)
+        {
+            textSt = TextST[stage];
+        }
+        else
+        {
+            textSt = "スペシャルステージ";
+        }
+
+        //裏表判別
+            if (SaveData.Instance.uraomote == 2)
+        {//裏ステージ
+            time = timeUra;
+            span = spanUra;
+            zan2 = nekosuUra;
+            stagehyouki = stage + 100;
+        }
+        else
+        {//表ステージ
+            time = timeOmote;
+            span = spanOmote;
+            zan2 = nekosuuOmote;
+            stagehyouki = stage;
+        }
+
         nextstage = stage + 1;
+
+
+
+
 
         //ライフパネル
         this.LIFEPanel = GameObject.Find("LIFEPanel");
@@ -98,10 +263,15 @@ public class GameDirector : MonoBehaviour {
         stageclear.SetActive(false);
 
         this.StartPanelStageText1 = GameObject.Find("StartPanel/TextStage");
-        this.StartPanelStageText1.GetComponent<Text>().text = "Stage" + stage;
+        this.StartPanelStageText1.GetComponent<Text>().text = "Stage" + stagehyouki;
 
-        this.StartPanelStageText2 = GameObject.Find("StartPanel/Text");
-        this.StartPanelStageText2.GetComponent<Text>().text = "Time limit  " + time + "\n Required quantity" + zan2 + " ";
+        this.StartPanelStageText2 = GameObject.Find("StartPanel/kihonImage/Text");
+        this.StartPanelStageText2.GetComponent<Text>().text = "×" + zan2 + "　　制限時間" + time + "秒";
+
+        this.StartPanelStageText3 = GameObject.Find("StartPanel/kakutoku/Text");
+        this.StartPanelStageText3.GetComponent<Text>().text = "1、ステージクリア \n2、制限時間"+(time-10f)+"秒以内にクリア\n3、ノーミスでクリア";
+        this.annaiText = GameObject.Find("annaiText");
+        this.annaiText.GetComponent<Text>().text = textSt;
 
         //ポーズ
         this.PausePanel = GameObject.Find("PausePanel");
@@ -113,10 +283,12 @@ public class GameDirector : MonoBehaviour {
 
         //クリアパネル
         this.ClearPanel = GameObject.Find("ClearPanel");
-
+        //仲間
+        this.nakamaPanel = GameObject.Find("nakamaPanel");
+        nakamaPanel.SetActive(false);
 
         this.StartPanelStageText1 = GameObject.Find("ClearPanel/TextStage");
-        this.StartPanelStageText1.GetComponent<Text>().text = "Stage" + stage + " Clear";
+        this.StartPanelStageText1.GetComponent<Text>().text = "Stage" + stagehyouki + " Clear";
 
         this.ClearPanelFast = GameObject.Find("ClearPanel/Image2/Text");
         this.ClearPanelFast.GetComponent<Text>().text = "Fast clear";
@@ -170,9 +342,12 @@ public class GameDirector : MonoBehaviour {
         //音楽設定
         if (GameObject.Find("SoundManager") != null)
         {
-            if (stage == 20)
+            float st = stagehyouki % 20;
+            if (st==0)
             {
                 SoundManager.Instance.PlayBGM(1);
+                
+
             } else
             {
                 SoundManager.Instance.PlayBGM(0);
@@ -252,6 +427,10 @@ public class GameDirector : MonoBehaviour {
             Stageclear();
         }
     }
+    public void onakama()
+    {
+        nakama++;
+    }
 
     //猫残数復活
     public void hukkatu()
@@ -292,16 +471,16 @@ public class GameDirector : MonoBehaviour {
 
 
 
-        SaveData.Instance.stage1[stage] = 1;
+        SaveData.Instance.stage1[stagehyouki] = 1;
 
         if (10 <= time)
         {
-            SaveData.Instance.stage2[stage] = 1;
+            SaveData.Instance.stage2[stagehyouki] = 1;
             Perfect1 = 1;
         }
         if (died == 0)
         {
-            SaveData.Instance.stage3[stage] = 1;
+            SaveData.Instance.stage3[stagehyouki] = 1;
             Perfect2 = 1;
         }
         if (Perfect1 == 1 && Perfect2 == 1)
@@ -312,15 +491,23 @@ public class GameDirector : MonoBehaviour {
         SaveData.Instance.Save();
 
 
-        Invoke("select", 3.0f);
+        Invoke("select", 2.0f);
     }
 
     //クリア後セレクト
     void select()
     {
+        if (nakama >= 1)
+        {
+            nakamaPanel.SetActive(true);
+        }
+        Invoke("select1", 2.0f);
+    }
+    void select1() { 
         //クリアパネル出現
         if (LIFEPanel) LIFEPanel.GetComponent<Panel>().panel2();
         ClearPanel.SetActive(true);
+        nakamaPanel.SetActive(false);
         Invoke("select2", 1.0f);
     }
     void select2() { 
@@ -431,7 +618,7 @@ public class GameDirector : MonoBehaviour {
     //次のステージへ
     public void Stagegogo()
     {
-        if (nextstage >= 31) nextstage = 1;//最終ステージチェック
+        if (nextstage >= 61) nextstage = 1;//最終ステージチェック
         Invoke("stagego", 0.1f);
     }
     void stagego()

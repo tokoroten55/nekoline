@@ -32,6 +32,9 @@ public class Bom : MonoBehaviour {
         float pos = transform.position.y;
         if (pos <= -5.5)
         {
+            this.bomText.GetComponent<TextMesh>().text = "";
+            rimi = 3.0f;
+            BBom = false;
             gameObject.SetActive(false);
        }
 

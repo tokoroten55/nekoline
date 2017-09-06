@@ -41,7 +41,7 @@ public class BOMge : MonoBehaviour
         GameObject pr = Instantiate(per) as GameObject;
         pr.transform.position = transform.position;
         AudioSource.PlayClipAtPoint(BomSE2, transform.position);
-        //this.gameObject.SetActive(false);
+        this.gameObject.SetActive(false);
 
     }
     void OnParticleCollision(GameObject other)

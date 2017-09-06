@@ -14,10 +14,13 @@ public class ironohenkou : MonoBehaviour {
     
     void Update()
     {
+
+        if (Input.GetMouseButton(1)) { delta=10; }
+
         //ラインの寿命
         this.delta += Time.deltaTime;
         
-        if (delta >= 3) {
+        if (delta >= 5) {
             float xxx = this.transform.localScale.x;
             float yyy = this.transform.localScale.y;
             GetComponent<Renderer>().material.color = Color.blue;
@@ -26,7 +29,7 @@ public class ironohenkou : MonoBehaviour {
         }
         else
         {
-            if (delta > 2.5) {
+            if (delta > 4) {
                 
                 GetComponent<Renderer>().material.color = Color.magenta;
 
@@ -42,9 +45,6 @@ public class ironohenkou : MonoBehaviour {
 
     private void Kieru()
     {
-        //delta = 0;
-        //GetComponent<Renderer>().material.color = Color.red;
-        //this.GetComponent<Rigidbody2D>().isKinematic = true;
         Destroy(gameObject);
     }
 
@@ -52,5 +52,10 @@ public class ironohenkou : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("teki2")) { Destroy(gameObject); }
+    }
+
+    void kirakira()
+    {
+
     }
 }

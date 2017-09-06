@@ -9,6 +9,8 @@ public class ScrollButton : MonoBehaviour
     [SerializeField]
     private GameObject[] btnPref; //ボタンプレハブ 
 
+    
+
     GameObject fad;
 
     //ボタン表示数
@@ -34,6 +36,7 @@ public class ScrollButton : MonoBehaviour
 
     void Start()
     {
+        SaveData.Instance.uraomote = 1;
         this.onnanoko = GameObject.Find("onnanoko");
         this.nekoImage = GameObject.Find("nekoImage");
         nekoImage.SetActive(false);
@@ -181,6 +184,7 @@ public class ScrollButton : MonoBehaviour
 
     public void MAINButton()
     {
+        SaveData.Instance.uraomote = 1;
         SoundManager.Instance.PlaySE(1);
         CharPanel.SetActive(false);
         ShopPanel.SetActive(false);
@@ -231,6 +235,7 @@ public class ScrollButton : MonoBehaviour
     }
     public void hard()
     {
+        SaveData.Instance.uraomote = 2;
         SoundManager.Instance.PlaySE(1);
         CharPanel.SetActive(false);
         ShopPanel.SetActive(false);
@@ -239,5 +244,33 @@ public class ScrollButton : MonoBehaviour
         SpecialPanel.SetActive(false);
         ReviewPanel.SetActive(false);
     }
+    //スペシャル
+    public void sp01()
+    {
 
+        SoundManager.Instance.PlaySE(1);
+        if (SaveData.Instance.Life < 3 | BottonClick == 1)
+        {
+            menu2.GetComponent<SelectInfo>().rePnel();
+            return;
+        }
+        else
+        {
+            BottonClick = 1;
+            onnanoko.GetComponent<onnanoko>().retgo();
+            nekoImage.SetActive(true);
+            SaveData.Instance.Life-=3;
+            PlayerData.GetComponent<PlayerData>().LIFEPoint();
+            SaveData.Instance.Save();
+        }
+
+        //フェード
+        this.Fade = GameObject.Find("FadeCanvas");
+        Fade.GetComponent<Fade>().NextStage();
+        SoundManager.Instance.PlayVoice(2);
+        StartCoroutine(DelayMethod(3f, () =>
+        {
+            SceneManager.LoadScene("Stage201");
+        }));
+    }
 }

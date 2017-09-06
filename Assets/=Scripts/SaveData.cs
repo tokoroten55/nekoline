@@ -37,6 +37,7 @@ public class SaveData : ISerializationCallbackReceiver
     //public int SampleInt = 10;
     //public string SampleString = "Sample";
     //public bool SampleBool = false;
+    public int uraomote = 0;
     public int kaishi=0;
     public long oldTicks =0;
     public int flag;
